@@ -358,9 +358,51 @@ Example usage:
 ``CAS_MAP_AFFILIATIONS`` [Optional]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If ``True``, django-cas-ng will create a Django group for each
-``affiliation`` that the CAS server associates with the user, during
-the authentication process.
+If ``True``, django-cas-ng will map the user's CAS affiliations to
+Django groups based on the mapping defined in ``CAS_AFFILIATIONS_MAPPING``.
+During the authentication process, only the CAS affiliations specified
+in the mapping will be processed, and the user's Django groups will be
+updated on every login.
+
+The default is ``False``.
+
+
+``CAS_AFFILIATIONS_KEY`` [Optional]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This variable defines the key used to retrieve the CAS affiliations
+from the authentication attributes. If your CAS server returns the
+affiliations under a different key, you can change this value accordingly.
+
+The default is ``affiliation``.
+
+
+``CAS_AFFILIATIONS_MAPPING`` [Optional]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This setting defines a mapping between CAS affiliations and Django groups.
+It should be provided as a dictionary where each key represents a CAS
+affiliation and its corresponding value is the name of the Django group
+to assign. Only the CAS affiliations included in this mapping will be
+processed for group assignment.
+
+For example:
+
+CAS_AFFILIATIONS_MAPPING = {
+    "cas_affil_group1": "django_group1",
+    "cas_affil_group2": "django_group2",
+}
+
+The default is an empty dictionary (``{}``).
+
+
+``CAS_CREATE_AFFIL_GROUPS`` [Optional]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If ``True``, django-cas-ng will automatically create a Django group when
+a mapped group (as specified in ``CAS_AFFILIATIONS_MAPPING``) does not
+exist in the system. If ``False``, the affiliation will be ignored if
+the corresponding Django group is missing.
 
 The default is ``False``.
 
@@ -373,6 +415,21 @@ affiliations. The callback is: ``handler(user, affils)``.
 
 The default is ``[]``.
 
+
+``CAS_STAFF_AFFILIATION`` [Optional]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This variable specifies the CAS affiliation that, when present in the
+user's authentication attributes, will cause the user's staff status
+in Django to be updated on every login. If the specified affiliation
+is found in the user's attributes, the user is marked as staff;
+if it is absent, any existing staff status is removed. This ensures
+that staff privileges are dynamically managed based on the current
+CAS affiliations.
+
+The default is ``None``.
+
+
 ``CAS_LOGIN_NEXT_PAGE`` [Optional]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -381,6 +438,7 @@ It may be different than CAS_REDIRECT_URL, for example if you want to use a
 specific callback function.
 
 The default is ``None``.
+
 
 ``CAS_LOGOUT_NEXT_PAGE`` [Optional]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
