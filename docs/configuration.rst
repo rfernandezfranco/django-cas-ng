@@ -364,6 +364,8 @@ During the authentication process, only the CAS affiliations specified
 in the mapping will be processed, and the user's Django groups will be
 updated on every login.
 
+**Note:** When enabled, a valid ``CAS_AFFILIATIONS_MAPPING`` must be provided.
+
 The default is ``False``.
 
 
@@ -373,6 +375,8 @@ The default is ``False``.
 This variable defines the key used to retrieve the CAS affiliations
 from the authentication attributes. If your CAS server returns the
 affiliations under a different key, you can change this value accordingly.
+
+**Note:** When enabled, a valid ``CAS_AFFILIATIONS_MAPPING`` must be provided.
 
 The default is ``affiliation``.
 
