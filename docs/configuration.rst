@@ -376,8 +376,6 @@ This variable defines the key used to retrieve the CAS affiliations
 from the authentication attributes. If your CAS server returns the
 affiliations under a different key, you can change this value accordingly.
 
-**Note:** When enabled, a valid ``CAS_AFFILIATIONS_MAPPING`` must be provided.
-
 The default is ``affiliation``.
 
 
@@ -431,6 +429,20 @@ in Django to be updated on every login. If the specified affiliation
 is found in the user's attributes, the user is marked as staff;
 if it is absent, any existing staff status is removed. This ensures
 that staff privileges are dynamically managed based on the current
+CAS affiliations.
+
+The default is ``None``.
+
+
+``CAS_ADMIN_AFFILIATION`` [Optional]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This variable specifies the CAS affiliation that, when present in the
+user's authentication attributes, will cause the user's admin status
+in Django to be updated on every login. If the specified affiliation
+is found in the user's attributes, the user is marked as admin;
+if it is absent, any existing staff status is removed. This ensures
+that admin privileges are dynamically managed based on the current
 CAS affiliations.
 
 The default is ``None``.
