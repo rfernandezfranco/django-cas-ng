@@ -374,7 +374,7 @@ affiliations. The callback is: ``handler(user, affils)``.
 The default is ``[]``.
 
 
-``CAS_STAFF_AFFILIATION`` [Optional]
+```CAS_STAFF_AFFILIATION`` [Optional]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This variable specifies the CAS affiliation that, when present in the
@@ -388,6 +388,20 @@ CAS affiliations.
 The default is ``None``.
 
 
+``CAS_ADMIN_AFFILIATION`` [Optional]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This variable specifies the CAS affiliation that, when present in the
+user's authentication attributes, will cause the user's admin status
+in Django to be updated on every login. If the specified affiliation
+is found in the user's attributes, the user is marked as admin;
+if it is absent, any existing staff status is removed. This ensures
+that admin privileges are dynamically managed based on the current
+CAS affiliations.
+
+The default is ``None``.
+
+
 ``CAS_LOGIN_NEXT_PAGE`` [Optional]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -396,6 +410,7 @@ It may be different than CAS_REDIRECT_URL, for example if you want to use a
 specific callback function.
 
 The default is ``None``.
+
 
 ``CAS_LOGOUT_NEXT_PAGE`` [Optional]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
